@@ -6,35 +6,33 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.preferredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Checkbox
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.hoc081098.datastoresample.Locator
 import com.hoc081098.datastoresample.R
+import com.hoc081098.datastoresample.domain.FilteredSortedTasks
 import com.hoc081098.datastoresample.domain.Task
 import com.hoc081098.datastoresample.ui.theme.DataStoreSampleTheme
 
 @Composable
-fun MainScreen() {
-    val viewModel = viewModel<MainViewModel>(factory = Locator.mainViewModelFactory)
-    val state by viewModel.state
-
+fun MainScreen(
+    state: FilteredSortedTasks?,
+    changeShowCompleted: (Boolean) -> Unit,
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -44,22 +42,26 @@ fun MainScreen() {
             )
         }
     ) {
-        Column {
-//            MainTasksList(state.tasks)
+        if (state == null) {
+            CircularProgressIndicator()
+        } else {
+            Column {
+                MainTasksList(state.tasks)
 
-            Row(modifier = Modifier.padding(all = 32.dp).wraps) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_baseline_filter_list_24),
-                    contentDescription = null,
-                    modifier = Modifier.preferredSize(24.dp),
-                )
+                Row(modifier = Modifier.padding(all = 32.dp)) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_baseline_filter_list_24),
+                        contentDescription = null,
+                        modifier = Modifier.preferredSize(24.dp),
+                    )
 
-                Spacer(modifier = Modifier.width(16.dp))
+                    Spacer(modifier = Modifier.width(16.dp))
 
-                Checkbox(
-                    checked = state.showCompleted,
-                    onCheckedChange = { viewModel.changeShowCompleted(it) }
-                )
+                    Checkbox(
+                        checked = state.showCompleted,
+                        onCheckedChange = { changeShowCompleted(it) }
+                    )
+                }
             }
         }
     }
@@ -98,82 +100,10 @@ fun TaskRow(task: Task) {
 @Preview
 @Composable
 fun MainScreenPreview() {
-/*  val simpleDateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-  fun parseDate(date: String? = null): Date = date?.let(simpleDateFormat::parse) ?: Date()
-  val tasks = listOf(
-      Task(
-          name = "Complete graduate project",
-          deadline = parseDate("25-12-2020"),
-          priority = TaskPriority.HIGH,
-      ),
-      Task(
-          name = "Learning Jetpack Compose",
-          deadline = parseDate("01-01-2021"),
-          priority = TaskPriority.MEDIUM,
-      ),
-      Task(
-          name = "Learning NestJs",
-          deadline = parseDate("02-01-2021"),
-          priority = TaskPriority.LOW,
-      ),
-      Task(
-          name = "Learn about Polymer",
-          deadline = parseDate("10-10-2020"),
-          priority = TaskPriority.LOW,
-      ),
-      Task(
-          name = "Learning Functional programming with Λrrow",
-          deadline = parseDate("01-01-2022"),
-          priority = TaskPriority.MEDIUM,
-      ),
-      Task(
-          name = "Learning Functional programming with Bow Swift",
-          deadline = parseDate("01-01-2022"),
-          priority = TaskPriority.MEDIUM,
-      ),
-      Task(
-          name = "Understand how to migrate to DataStore",
-          deadline = parseDate(),
-          priority = TaskPriority.HIGH,
-      ),
-      Task(
-          name = "Complete graduate project",
-          deadline = parseDate("25-12-2020"),
-          priority = TaskPriority.HIGH,
-      ),
-      Task(
-          name = "Learning Jetpack Compose",
-          deadline = parseDate("01-01-2021"),
-          priority = TaskPriority.MEDIUM,
-      ),
-      Task(
-          name = "Learning NestJs",
-          deadline = parseDate("02-01-2021"),
-          priority = TaskPriority.LOW,
-      ),
-      Task(
-          name = "Learn about Polymer",
-          deadline = parseDate("10-10-2020"),
-          priority = TaskPriority.LOW,
-      ),
-      Task(
-          name = "Learning Functional programming with Λrrow",
-          deadline = parseDate("01-01-2022"),
-          priority = TaskPriority.MEDIUM,
-      ),
-      Task(
-          name = "Learning Functional programming with Bow Swift",
-          deadline = parseDate("01-01-2022"),
-          priority = TaskPriority.MEDIUM,
-      ),
-      Task(
-          name = "Understand how to migrate to DataStore",
-          deadline = parseDate(),
-          priority = TaskPriority.HIGH,
-      )
-  )*/
-
     DataStoreSampleTheme {
-        MainScreen()
+        MainScreen(
+            null,
+            {},
+        )
     }
 }
