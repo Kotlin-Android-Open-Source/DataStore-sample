@@ -2,9 +2,9 @@ package com.hoc081098.datastoresample.domain
 
 import com.hoc081098.datastoresample.domain.repo.UserPreferencesRepository
 
-class ChangeShowCompleted(
+class EnableSortByDeadline(
     private val userPreferencesRepository: UserPreferencesRepository,
 ) {
-    suspend operator fun invoke(showCompleted: Boolean) =
-        userPreferencesRepository.updateShowCompleted(showCompleted)
+    suspend operator fun invoke(enabled: Boolean) =
+        userPreferencesRepository.enableSortByDeadline(enabled)
 }

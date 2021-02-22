@@ -7,10 +7,10 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.hoc081098.datastoresample.domain.SortOrder
-import com.hoc081098.datastoresample.domain.SortOrder.*
-import com.hoc081098.datastoresample.domain.UserPreferences
-import com.hoc081098.datastoresample.domain.UserPreferencesRepository
+import com.hoc081098.datastoresample.domain.model.SortOrder
+import com.hoc081098.datastoresample.domain.model.SortOrder.*
+import com.hoc081098.datastoresample.domain.model.UserPreferences
+import com.hoc081098.datastoresample.domain.repo.UserPreferencesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged

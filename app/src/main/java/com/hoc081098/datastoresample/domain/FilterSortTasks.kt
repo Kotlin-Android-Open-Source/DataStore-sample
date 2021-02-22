@@ -1,5 +1,7 @@
-package com.hoc081098.datastoresample.domain
+package com.hoc081098.datastoresample.domain.model
 
+import com.hoc081098.datastoresample.domain.repo.TaskRepository
+import com.hoc081098.datastoresample.domain.repo.UserPreferencesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 

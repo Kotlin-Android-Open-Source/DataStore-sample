@@ -1,8 +1,8 @@
 package com.hoc081098.datastoresample.data
 
-import com.hoc081098.datastoresample.domain.Task
-import com.hoc081098.datastoresample.domain.TaskPriority
-import com.hoc081098.datastoresample.domain.TaskRepository
+import com.hoc081098.datastoresample.domain.model.Task
+import com.hoc081098.datastoresample.domain.model.TaskPriority
+import com.hoc081098.datastoresample.domain.repo.TaskRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import java.text.SimpleDateFormat

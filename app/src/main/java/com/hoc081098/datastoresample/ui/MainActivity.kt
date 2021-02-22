@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            DataStoreSampleTheme {
+            DataStoreSampleTheme(true) {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     val viewModel = viewModel<MainViewModel>(factory = Locator.mainViewModelFactory)
@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
                     MainScreen(
                         state,
                         viewModel::changeShowCompleted,
+                        viewModel::enableSortByDeadline,
                     )
                 }
             }

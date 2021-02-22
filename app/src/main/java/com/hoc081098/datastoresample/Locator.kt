@@ -5,7 +5,8 @@ import androidx.datastore.preferences.createDataStore
 import com.hoc081098.datastoresample.data.TaskRepositoryImpl
 import com.hoc081098.datastoresample.data.UserPreferencesRepositoryImpl
 import com.hoc081098.datastoresample.domain.ChangeShowCompleted
-import com.hoc081098.datastoresample.domain.FilterSortTasks
+import com.hoc081098.datastoresample.domain.EnableSortByDeadline
+import com.hoc081098.datastoresample.domain.model.FilterSortTasks
 import com.hoc081098.datastoresample.ui.MainViewModel
 
 object Locator {
@@ -18,7 +19,12 @@ object Locator {
         this.application = application
     }
 
-    val mainViewModelFactory get() = MainViewModel.Factory(filterSortTasks, changeShowCompleted)
+    val mainViewModelFactory
+        get() = MainViewModel.Factory(
+            filterSortTasks,
+            changeShowCompleted,
+            enableSortByDeadline,
+        )
 
     private val filterSortTasks
         get() = FilterSortTasks(
@@ -27,6 +33,8 @@ object Locator {
         )
 
     private val changeShowCompleted get() = ChangeShowCompleted(userPreferencesRepository)
+
+    private val enableSortByDeadline get() = EnableSortByDeadline(userPreferencesRepository)
 
     private val taskRepository by lazy { TaskRepositoryImpl() }
     private val userPreferencesRepository by lazy {
