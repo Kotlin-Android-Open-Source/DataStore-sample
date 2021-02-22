@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            DataStoreSampleTheme(darkTheme = true) {
+            DataStoreSampleTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     val viewModel = viewModel<MainViewModel>(factory = Locator.mainViewModelFactory)

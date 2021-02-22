@@ -1,5 +1,6 @@
 package com.hoc081098.datastoresample.data
 
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -98,5 +99,6 @@ class UserPreferencesRepositoryImpl(
 
     override suspend fun updateShowCompleted(showCompleted: Boolean) {
         dataStore.edit { it[Keys.showCompleted] = showCompleted }
+        Log.d("UserPreferencesRepo", "updateShowCompleted $showCompleted")
     }
 }

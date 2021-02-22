@@ -56,8 +56,12 @@ fun MainScreen(
                 CircularProgressIndicator()
             }
         } else {
-            Column {
-                MainTasksList(state.tasks)
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(),
+            ) {
+                MainTasksList(state.tasks, Modifier.weight(1f))
 
                 Row(modifier = Modifier.padding(all = 32.dp)) {
                     Image(
@@ -70,7 +74,7 @@ fun MainScreen(
 
                     Checkbox(
                         checked = state.showCompleted,
-                        onCheckedChange = { changeShowCompleted(it) }
+                        onCheckedChange = changeShowCompleted
                     )
                 }
             }
@@ -79,9 +83,9 @@ fun MainScreen(
 }
 
 @Composable
-fun MainTasksList(tasks: List<Task>) {
+fun MainTasksList(tasks: List<Task>, modifier: Modifier = Modifier) {
     LazyColumn(
-//        modifier = Modifier.fillMaxHeight(),
+        modifier = modifier,
         contentPadding = PaddingValues(all = 8.dp)
     ) {
         items(tasks) { task ->
