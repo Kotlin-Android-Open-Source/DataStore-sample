@@ -59,7 +59,17 @@ class TaskRepositoryImpl : TaskRepository {
                     deadline = parseDate(),
                     priority = TaskPriority.HIGH,
                     completed = true,
-                )
+                ),
+                Task(
+                    name = "RxDart",
+                    deadline = parseDate("25-12-2020"),
+                    priority = TaskPriority.HIGH,
+                ),
+                Task(
+                    name = "RxSwift",
+                    deadline = parseDate("01-01-2021"),
+                    priority = TaskPriority.MEDIUM,
+                ),
             )
         )
     }
