@@ -5,7 +5,9 @@ import androidx.datastore.preferences.createDataStore
 import com.hoc081098.datastoresample.data.TaskRepositoryImpl
 import com.hoc081098.datastoresample.data.UserPreferencesRepositoryImpl
 import com.hoc081098.datastoresample.domain.ChangeShowCompleted
+import com.hoc081098.datastoresample.domain.ChangeTheme
 import com.hoc081098.datastoresample.domain.EnableSortByDeadline
+import com.hoc081098.datastoresample.domain.GetTheme
 import com.hoc081098.datastoresample.domain.model.FilterSortTasks
 import com.hoc081098.datastoresample.ui.MainViewModel
 
@@ -21,9 +23,11 @@ object Locator {
 
     val mainViewModelFactory
         get() = MainViewModel.Factory(
-            filterSortTasks,
-            changeShowCompleted,
-            enableSortByDeadline,
+            filterSortTasks = filterSortTasks,
+            getTheme = getTheme,
+            changeShowCompleted = changeShowCompleted,
+            enableSortByDeadline = enableSortByDeadline,
+            changeTheme = changeTheme,
         )
 
     private val filterSortTasks
@@ -31,6 +35,10 @@ object Locator {
             taskRepository = taskRepository,
             userPreferencesRepository = userPreferencesRepository
         )
+
+    private val changeTheme get() = ChangeTheme(userPreferencesRepository)
+
+    private val getTheme get() = GetTheme(userPreferencesRepository)
 
     private val changeShowCompleted get() = ChangeShowCompleted(userPreferencesRepository)
 

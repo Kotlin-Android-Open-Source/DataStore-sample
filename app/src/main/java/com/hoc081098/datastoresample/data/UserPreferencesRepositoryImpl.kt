@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.hoc081098.datastoresample.domain.model.SortOrder
 import com.hoc081098.datastoresample.domain.model.SortOrder.*
+import com.hoc081098.datastoresample.domain.model.Theme
 import com.hoc081098.datastoresample.domain.model.UserPreferences
 import com.hoc081098.datastoresample.domain.repo.UserPreferencesRepository
 import kotlinx.coroutines.flow.Flow
@@ -24,6 +25,7 @@ class UserPreferencesRepositoryImpl(
     private object Keys {
         val showCompleted = booleanPreferencesKey("show_completed")
         val sortOrder = stringPreferencesKey("sort_order")
+        val theme = booleanPreferencesKey("theme")
     }
 
     private inline val Preferences.showCompleted
@@ -100,5 +102,28 @@ class UserPreferencesRepositoryImpl(
     override suspend fun updateShowCompleted(showCompleted: Boolean) {
         dataStore.edit { it[Keys.showCompleted] = showCompleted }
         Log.d("UserPreferencesRepo", "updateShowCompleted $showCompleted")
+    }
+
+    override val theme: Flow<Theme> = dataStore.data
+        .catch {
+            // throws an IOException when an error is encountered when reading data
+            if (it is IOException) {
+                emit(emptyPreferences())
+            } else {
+                throw it
+            }
+        }
+        .map {
+            when (it[Keys.theme]) {
+                true -> Theme.NIGHT_YES
+                false -> Theme.NIGHT_NO
+                null -> Theme.NIGHT_UNSPECIFIED
+            }
+        }
+        .distinctUntilChanged()
+
+    override suspend fun changeTheme(lightTheme: Boolean) {
+        dataStore.edit { it[Keys.theme] = lightTheme }
+        Log.d("UserPreferencesRepo", "changeTheme $lightTheme")
     }
 }

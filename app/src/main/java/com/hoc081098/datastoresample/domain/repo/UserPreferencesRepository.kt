@@ -1,5 +1,6 @@
 package com.hoc081098.datastoresample.domain.repo
 
+import com.hoc081098.datastoresample.domain.model.Theme
 import com.hoc081098.datastoresample.domain.model.UserPreferences
 import kotlinx.coroutines.flow.Flow
 
@@ -11,4 +12,8 @@ interface UserPreferencesRepository {
     suspend fun enableSortByPriority(enabled: Boolean)
 
     suspend fun updateShowCompleted(showCompleted: Boolean)
+
+    suspend fun changeTheme(lightTheme: Boolean)
+
+    val theme: Flow<Theme>
 }

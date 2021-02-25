@@ -21,10 +21,12 @@ import androidx.compose.material.Checkbox
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
+import androidx.compose.material.IconToggleButton
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
+import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
@@ -47,15 +49,23 @@ fun MainScreen(
     state: FilteredSortedTasks?,
     changeShowCompleted: (Boolean) -> Unit,
     enableSortByDeadline: (Boolean) -> Unit,
+    lightTheme: Boolean,
+    changeTheme: (Boolean) -> Unit,
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(text = "Jetpack DataStore sample")
+                },
+                actions = {
+                    Switch(
+                        checked = lightTheme,
+                        onCheckedChange = changeTheme,
+                    )
                 }
             )
-        }
+        },
     ) {
         if (state == null) {
             Column(
@@ -219,6 +229,8 @@ fun MainScreenPreview() {
             null,
             {},
             {},
+            false,
+            {}
         )
     }
 }
