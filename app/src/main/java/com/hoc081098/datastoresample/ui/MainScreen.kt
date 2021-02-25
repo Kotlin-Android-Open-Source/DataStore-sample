@@ -1,6 +1,7 @@
 package com.hoc081098.datastoresample.ui
 
-import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,7 +22,6 @@ import androidx.compose.material.Checkbox
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
-import androidx.compose.material.IconToggleButton
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -174,6 +174,7 @@ fun TaskRow(task: Task) {
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun SortChip(
     text: String,
@@ -201,13 +202,14 @@ fun SortChip(
                     vertical = 6.dp
                 )
             ) {
-                Icon(
-                    imageVector = Icons.Default.Check,
-                    contentDescription = null,
-                    modifier = Modifier.width(animateDpAsState(targetValue = if (selected) 24.dp else 0.dp).value),
-                )
-
-                Spacer(modifier = Modifier.width(animateDpAsState(targetValue = if (selected) 2.dp else 0.dp).value))
+                AnimatedVisibility(visible = selected) {
+                    Icon(
+                        imageVector = Icons.Default.Check,
+                        contentDescription = null,
+                        modifier = Modifier.width(24.dp),
+                    )
+                    Spacer(modifier = Modifier.width(2.dp))
+                }
 
                 Text(
                     text = text,
