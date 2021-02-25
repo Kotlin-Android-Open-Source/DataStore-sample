@@ -7,6 +7,7 @@ import com.hoc081098.datastoresample.data.UserPreferencesRepositoryImpl
 import com.hoc081098.datastoresample.domain.ChangeShowCompleted
 import com.hoc081098.datastoresample.domain.ChangeTheme
 import com.hoc081098.datastoresample.domain.EnableSortByDeadline
+import com.hoc081098.datastoresample.domain.EnableSortByPriority
 import com.hoc081098.datastoresample.domain.GetTheme
 import com.hoc081098.datastoresample.domain.model.FilterSortTasks
 import com.hoc081098.datastoresample.ui.MainViewModel
@@ -27,6 +28,7 @@ object Locator {
             getTheme = getTheme,
             changeShowCompleted = changeShowCompleted,
             enableSortByDeadline = enableSortByDeadline,
+            enableSortByPriority = enableSortByPriority,
             changeTheme = changeTheme,
         )
 
@@ -43,6 +45,8 @@ object Locator {
     private val changeShowCompleted get() = ChangeShowCompleted(userPreferencesRepository)
 
     private val enableSortByDeadline get() = EnableSortByDeadline(userPreferencesRepository)
+
+    private val enableSortByPriority get() = EnableSortByPriority(userPreferencesRepository)
 
     private val taskRepository by lazy { TaskRepositoryImpl() }
     private val userPreferencesRepository by lazy {

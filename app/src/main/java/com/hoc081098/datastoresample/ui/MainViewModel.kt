@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.hoc081098.datastoresample.domain.ChangeShowCompleted
 import com.hoc081098.datastoresample.domain.ChangeTheme
 import com.hoc081098.datastoresample.domain.EnableSortByDeadline
+import com.hoc081098.datastoresample.domain.EnableSortByPriority
 import com.hoc081098.datastoresample.domain.GetTheme
 import com.hoc081098.datastoresample.domain.model.FilterSortTasks
 import com.hoc081098.datastoresample.domain.model.FilteredSortedTasks
@@ -21,6 +22,7 @@ class MainViewModel(
     getTheme: GetTheme,
     private val _changeShowCompleted: ChangeShowCompleted,
     private val _enableSortByDeadline: EnableSortByDeadline,
+    private val _enableSortByPriority: EnableSortByPriority,
     private val _changeTheme: ChangeTheme,
 ) : ViewModel() {
     val state: StateFlow<FilteredSortedTasks?> = filterSortTasks()
@@ -53,6 +55,10 @@ class MainViewModel(
         viewModelScope.launch { _enableSortByDeadline(enabled) }
     }
 
+    fun enableSortByPriority(enabled: Boolean) {
+        viewModelScope.launch { _enableSortByPriority(enabled) }
+    }
+
     fun changeTheme(lightTheme: Boolean) {
         viewModelScope.launch { _changeTheme(lightTheme) }
     }
@@ -62,6 +68,7 @@ class MainViewModel(
         private val getTheme: GetTheme,
         private val changeShowCompleted: ChangeShowCompleted,
         private val enableSortByDeadline: EnableSortByDeadline,
+        private val enableSortByPriority: EnableSortByPriority,
         private val changeTheme: ChangeTheme,
 
         ) : ViewModelProvider.Factory {
@@ -73,6 +80,7 @@ class MainViewModel(
                     getTheme = getTheme,
                     _changeShowCompleted = changeShowCompleted,
                     _enableSortByDeadline = enableSortByDeadline,
+                    _enableSortByPriority = enableSortByPriority,
                     _changeTheme = changeTheme,
                 ) as T
             }

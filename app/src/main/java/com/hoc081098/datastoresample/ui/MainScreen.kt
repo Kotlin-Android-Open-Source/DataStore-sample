@@ -49,6 +49,7 @@ fun MainScreen(
     state: FilteredSortedTasks?,
     changeShowCompleted: (Boolean) -> Unit,
     enableSortByDeadline: (Boolean) -> Unit,
+    enableSortByPriority: (Boolean) -> Unit,
     lightTheme: Boolean,
     changeTheme: (Boolean) -> Unit,
 ) {
@@ -121,9 +122,7 @@ fun MainScreen(
                         text = "Priority",
                         selected = state.sortOrder == SortOrder.BY_PRIORITY
                                 || state.sortOrder == SortOrder.BY_DEADLINE_AND_PRIORITY,
-                        setSelected = {
-
-                        },
+                        setSelected = enableSortByPriority,
                         shape = RoundedCornerShape(14.dp)
                     )
 
@@ -228,11 +227,12 @@ fun SortChip(
 fun MainScreenPreview() {
     DataStoreSampleTheme {
         MainScreen(
-            null,
-            {},
-            {},
-            false,
-            {}
+            state = null,
+            changeShowCompleted = {},
+            enableSortByDeadline = {},
+            enableSortByPriority = {},
+            lightTheme = false,
+            changeTheme = {}
         )
     }
 }
