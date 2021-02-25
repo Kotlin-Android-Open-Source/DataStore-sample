@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.preferredHeight
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
@@ -173,7 +173,7 @@ fun SortChip(
     shape: Shape = MaterialTheme.shapes.small,
 ) {
     Surface(
-        modifier = modifier.preferredHeight(28.dp),
+        modifier = modifier.height(28.dp),
         color = MaterialTheme.colors.secondary,
         shape = shape,
         elevation = 2.dp
