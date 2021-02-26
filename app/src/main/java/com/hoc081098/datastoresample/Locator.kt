@@ -1,15 +1,16 @@
 package com.hoc081098.datastoresample
 
 import android.app.Application
-import androidx.datastore.preferences.createDataStore
+import android.content.Context
+import androidx.datastore.preferences.preferencesDataStore
 import com.hoc081098.datastoresample.data.TaskRepositoryImpl
 import com.hoc081098.datastoresample.data.UserPreferencesRepositoryImpl
 import com.hoc081098.datastoresample.domain.usecase.ChangeShowCompleted
 import com.hoc081098.datastoresample.domain.usecase.ChangeTheme
 import com.hoc081098.datastoresample.domain.usecase.EnableSortByDeadline
 import com.hoc081098.datastoresample.domain.usecase.EnableSortByPriority
-import com.hoc081098.datastoresample.domain.usecase.GetTheme
 import com.hoc081098.datastoresample.domain.usecase.FilterSortTasks
+import com.hoc081098.datastoresample.domain.usecase.GetTheme
 import com.hoc081098.datastoresample.ui.MainViewModel
 
 object Locator {
@@ -48,9 +49,10 @@ object Locator {
 
     private val enableSortByPriority get() = EnableSortByPriority(userPreferencesRepository)
 
+    private val Context.dataStore by preferencesDataStore(name = "user_preferences")
+
     private val taskRepository by lazy { TaskRepositoryImpl() }
     private val userPreferencesRepository by lazy {
-        val dataStore = requireApplication.createDataStore(name = "user_preferences")
-        UserPreferencesRepositoryImpl(dataStore)
+        UserPreferencesRepositoryImpl(requireApplication.dataStore)
     }
 }
