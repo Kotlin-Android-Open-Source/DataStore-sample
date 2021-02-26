@@ -2,16 +2,19 @@ package com.hoc081098.datastoresample.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
@@ -31,18 +34,22 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Reorder
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hoc081098.datastoresample.domain.usecase.FilteredSortedTasks
 import com.hoc081098.datastoresample.domain.model.SortOrder
 import com.hoc081098.datastoresample.domain.model.Task
-import com.hoc081098.datastoresample.ui.theme.DataStoreSampleTheme
+import com.hoc081098.datastoresample.domain.model.TaskPriority
+import com.hoc081098.datastoresample.domain.model.TaskPriority.*
+import com.hoc081098.datastoresample.domain.usecase.FilteredSortedTasks
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Composable
 fun MainScreen(
@@ -67,7 +74,7 @@ fun MainScreen(
                 }
             )
         },
-    ) {
+    ) { innerPadding ->
         if (state == null) {
             Column(
                 modifier = Modifier
@@ -84,7 +91,10 @@ fun MainScreen(
                     .fillMaxHeight()
                     .fillMaxWidth(),
             ) {
-                MainTasksList(state.tasks, Modifier.weight(1f))
+                MainTasksList(state.tasks,
+                    Modifier
+                        .weight(1f)
+                        .padding(innerPadding))
 
                 Row(modifier = Modifier.padding(all = 16.dp)) {
                     Icon(
@@ -145,7 +155,6 @@ fun MainScreen(
 fun MainTasksList(tasks: List<Task>, modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = modifier,
-        contentPadding = PaddingValues(all = 8.dp)
     ) {
         items(tasks) { task ->
             TaskRow(task = task)
@@ -156,20 +165,57 @@ fun MainTasksList(tasks: List<Task>, modifier: Modifier = Modifier) {
     }
 }
 
+private val TaskPriority.color: Color
+    get() {
+        return when (this) {
+            HIGH -> Color.Red.copy(alpha = 0.8f)
+            MEDIUM -> Color.Magenta.copy(alpha = 0.8f)
+            LOW -> Color.Green.copy(alpha = 0.8f)
+        }
+    }
+private val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
+
 @Composable
 fun TaskRow(task: Task) {
+    val bgColor = if (task.completed) {
+        LocalContentColor.current.copy(alpha = 0.1f)
+    } else {
+        Color.Unspecified
+    }
+
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.padding(all = 12.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(bgColor)
+            .padding(all = 12.dp)
     ) {
         Text(
             text = task.name,
             style = MaterialTheme.typography.subtitle1,
         )
+        Spacer(modifier = Modifier.requiredHeight(8.dp))
         Text(
-            text = "Priority: ${task.priority.name}",
-            style = MaterialTheme.typography.subtitle2,
+            text = "Priority ${task.priority.name}",
+            style = MaterialTheme.typography.subtitle2.copy(
+                color = task.priority.color
+            ),
         )
+        Spacer(modifier = Modifier.requiredHeight(8.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Default.DateRange,
+                contentDescription = null,
+                tint = LocalContentColor.current.copy(alpha = 0.5f),
+            )
+            Spacer(modifier = Modifier.requiredWidth(8.dp))
+            Text(
+                dateFormat.format(task.deadline),
+                style = MaterialTheme.typography.caption,
+            )
+        }
     }
 }
 
@@ -222,17 +268,29 @@ fun SortChip(
     }
 }
 
-@Preview
-@Composable
-fun MainScreenPreview() {
-    DataStoreSampleTheme {
-        MainScreen(
-            state = null,
-            changeShowCompleted = {},
-            enableSortByDeadline = {},
-            enableSortByPriority = {},
-            lightTheme = false,
-            changeTheme = {}
-        )
-    }
-}
+//@Preview
+//@Composable
+//fun MainScreenPreview() {
+//    DataStoreSampleTheme {
+//        MainScreen(
+//            state = null,
+//            changeShowCompleted = {},
+//            enableSortByDeadline = {},
+//            enableSortByPriority = {},
+//            lightTheme = false,
+//            changeTheme = {}
+//        )
+//    }
+//}
+//
+//@Preview
+//@Composable
+//fun TaskRowPreview() {
+//    TaskRow(
+//        task = Task(
+//            name = "Complete graduate project",
+//            deadline = Date(),
+//            priority = HIGH,
+//        ),
+//    )
+//}
