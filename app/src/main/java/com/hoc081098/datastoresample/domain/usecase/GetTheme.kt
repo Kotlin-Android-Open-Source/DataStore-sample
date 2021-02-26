@@ -1,4 +1,4 @@
-package com.hoc081098.datastoresample.domain
+package com.hoc081098.datastoresample.domain.usecase
 
 import com.hoc081098.datastoresample.domain.model.Theme
 import com.hoc081098.datastoresample.domain.repo.UserPreferencesRepository

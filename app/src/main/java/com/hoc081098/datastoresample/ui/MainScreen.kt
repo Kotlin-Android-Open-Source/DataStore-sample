@@ -39,7 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hoc081098.datastoresample.domain.model.FilteredSortedTasks
+import com.hoc081098.datastoresample.domain.usecase.FilteredSortedTasks
 import com.hoc081098.datastoresample.domain.model.SortOrder
 import com.hoc081098.datastoresample.domain.model.Task
 import com.hoc081098.datastoresample.ui.theme.DataStoreSampleTheme

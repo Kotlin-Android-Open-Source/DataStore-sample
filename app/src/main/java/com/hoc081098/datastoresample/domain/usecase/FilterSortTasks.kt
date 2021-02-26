@@ -1,5 +1,7 @@
-package com.hoc081098.datastoresample.domain.model
+package com.hoc081098.datastoresample.domain.usecase
 
+import com.hoc081098.datastoresample.domain.model.SortOrder
+import com.hoc081098.datastoresample.domain.model.Task
 import com.hoc081098.datastoresample.domain.repo.TaskRepository
 import com.hoc081098.datastoresample.domain.repo.UserPreferencesRepository
 import kotlinx.coroutines.flow.Flow

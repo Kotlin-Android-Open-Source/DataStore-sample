@@ -4,12 +4,12 @@ import android.app.Application
 import androidx.datastore.preferences.createDataStore
 import com.hoc081098.datastoresample.data.TaskRepositoryImpl
 import com.hoc081098.datastoresample.data.UserPreferencesRepositoryImpl
-import com.hoc081098.datastoresample.domain.ChangeShowCompleted
-import com.hoc081098.datastoresample.domain.ChangeTheme
-import com.hoc081098.datastoresample.domain.EnableSortByDeadline
-import com.hoc081098.datastoresample.domain.EnableSortByPriority
-import com.hoc081098.datastoresample.domain.GetTheme
-import com.hoc081098.datastoresample.domain.model.FilterSortTasks
+import com.hoc081098.datastoresample.domain.usecase.ChangeShowCompleted
+import com.hoc081098.datastoresample.domain.usecase.ChangeTheme
+import com.hoc081098.datastoresample.domain.usecase.EnableSortByDeadline
+import com.hoc081098.datastoresample.domain.usecase.EnableSortByPriority
+import com.hoc081098.datastoresample.domain.usecase.GetTheme
+import com.hoc081098.datastoresample.domain.usecase.FilterSortTasks
 import com.hoc081098.datastoresample.ui.MainViewModel
 
 object Locator {
