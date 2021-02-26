@@ -18,30 +18,34 @@ import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
+import androidx.compose.material.IconToggleButton
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
-import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Reorder
 import androidx.compose.material.icons.filled.Sort
+import androidx.compose.material.icons.outlined.LightMode
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.semantics.onClick
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.hoc081098.datastoresample.domain.model.SortOrder
 import com.hoc081098.datastoresample.domain.model.Task
@@ -67,10 +71,27 @@ fun MainScreen(
                     Text(text = "Jetpack DataStore sample")
                 },
                 actions = {
-                    Switch(
+                    IconToggleButton(
                         checked = lightTheme,
                         onCheckedChange = changeTheme,
-                    )
+                        modifier = Modifier.semantics {
+                            // Use a custom click label that accessibility services can communicate to the user.
+                            // We only want to override the label, not the actual action, so for the action we pass null.
+                            onClick(
+                                label = if (lightTheme) "To dark mode" else "To night mode",
+                                action = null
+                            )
+                        }
+                    ) {
+                        Icon(
+                            imageVector = if (lightTheme) {
+                                Icons.Filled.LightMode
+                            } else {
+                                Icons.Outlined.LightMode
+                            },
+                            contentDescription = null,  // handled by click label of parent
+                        )
+                    }
                 }
             )
         },
@@ -156,11 +177,13 @@ fun MainTasksList(tasks: List<Task>, modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = modifier,
     ) {
-        items(tasks) { task ->
+        itemsIndexed(tasks) { index, task ->
             TaskRow(task = task)
-            Divider(
-                thickness = 0.7.dp
-            )
+            if (index < tasks.lastIndex) {
+                Divider(
+                    thickness = 0.7.dp
+                )
+            }
         }
     }
 }
@@ -178,7 +201,7 @@ private val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
 @Composable
 fun TaskRow(task: Task) {
     val bgColor = if (task.completed) {
-        LocalContentColor.current.copy(alpha = 0.1f)
+        LocalContentColor.current.copy(alpha = 0.07f)
     } else {
         Color.Unspecified
     }
