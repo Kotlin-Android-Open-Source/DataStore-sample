@@ -2,7 +2,7 @@
 buildscript {
     ext {
         compose_version = '1.0.0-beta01'
-        kotlin_version = '1.4.30'
+        kotlin_version = '1.7.10'
         coroutines_version = '1.4.2'
     }
     repositories {
